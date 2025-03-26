@@ -7,12 +7,24 @@ const router = express.Router();
     newExam.id = exams.length + 1;
     exams.push(newExam);
     res.status(201).json(newExam);
+  
+  });
+// PUT /exams/:id - Updates an existing exam
+router.put('/exams/:id', (req, res) => {
+    const { id } = req.params;
+    const updatedExam = req.body;
+    const index = exams.findIndex(exam => exam.id == id);
+  
+    if (index !== -1) {
+      exams[index] = { ...exams[index], ...updatedExam };
+      res.json(exams[index]);
+    } else {
+      res.status(404).json({ message: 'Exam not found' });
+    }
   });
 
-<<<<<<< HEAD
   
 
-=======
 // GET /exams route - Returns a hardcoded list of exams
 router.get('/exams', (req, res) => {
     const exams = [
@@ -21,6 +33,6 @@ router.get('/exams', (req, res) => {
     ];
     res.json(exams);
   });
-  
->>>>>>> Bonbon
-module.exports = router;
+
+
+module.exports = router; 
